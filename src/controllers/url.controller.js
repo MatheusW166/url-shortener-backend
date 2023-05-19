@@ -8,7 +8,7 @@ async function shorten(req, res) {
     const shorten = await urlRepository.create({
       url,
       userId,
-      shortUrl: nanoid(),
+      shortUrl: nanoid(6),
     });
     res.status(201).send(shorten);
   } catch (err) {

@@ -34,7 +34,7 @@ async function getMe({ id }) {
   );
   const shortenedUrls = await db.query(
     `SELECT id, short_url AS "shortUrl", url, visit_count AS "visitCount" 
-    FROM urls WHERE user_id=$1;`,
+    FROM urls WHERE user_id=$1 ORDER BY created_at DESC;`,
     [id]
   );
   if (!userVisitCount.rows[0]) return null;

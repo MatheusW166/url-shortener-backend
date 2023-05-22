@@ -49,7 +49,7 @@ async function getRank() {
 }
 
 async function incrementUrlVisits({ shortUrl }) {
-  return await db.query(`CALL increment_visit_count($1);`, [shortUrl]);
+  return await db.query(`CALL increment_visit($1);`, [shortUrl]);
 }
 
 export const urlRepository = {

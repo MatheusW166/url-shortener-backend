@@ -1,6 +1,9 @@
 function validateSchema(schema) {
   return (req, res, next) => {
-    const { error, value } = schema.validate(req.body, { abortEarly: false });
+    const { error, value } = schema.validate(req.body, {
+      abortEarly: false,
+      allowUnknown: true,
+    });
     if (error?.details?.length) {
       return res.status(400).send({
         error: error.details.map((detail) => {

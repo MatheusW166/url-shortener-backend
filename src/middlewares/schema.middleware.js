@@ -5,7 +5,7 @@ function validateSchema(schema) {
       allowUnknown: true,
     });
     if (error?.details?.length) {
-      return res.status(400).send({
+      return res.status(422).send({
         error: error.details.map((detail) => {
           const key = detail.context.key;
           return { [key]: detail.message };

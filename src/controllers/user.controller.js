@@ -24,7 +24,7 @@ async function logIn(req, res) {
   try {
     const userFound = await userRepository.searchByEmail({ email });
     if (!userFound) {
-      return res.status(404).send({ error: "user not found" });
+      return res.status(401).send({ error: "user not found" });
     }
     if (!compareSync(password, userFound.password)) {
       return res.status(401).send({ error: "wrong password" });

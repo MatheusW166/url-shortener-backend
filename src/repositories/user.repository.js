@@ -27,22 +27,28 @@ async function searchById({ id }) {
 async function getMe({ id }) {
   const userVisitCount = await db.query(
     `
-    SELECT users.id, users.name, SUM(visit_count) AS "visitCount" FROM urls 
-    JOIN users ON users.id=urls.user_id WHERE users.id=$1 GROUP BY users.id, users.name;
+    SELECT users.id, users.name, SUM(visit_count) AS "visitCount" FROM users 
+    LEFT JOIN urls ON users.id=urls.user_id WHERE users.id=$1 GROUP BY users.id, users.name;
   `,
     [id]
   );
+
+  if (!userVisitCount.rows[0]) return null;
+
   const shortenedUrls = await db.query(
     `SELECT id, short_url AS "shortUrl", url, visit_count AS "visitCount" 
     FROM urls WHERE user_id=$1 ORDER BY created_at DESC;`,
     [id]
   );
-  if (!userVisitCount.rows[0]) return null;
 
-  return {
+  const userData = {
     ...userVisitCount.rows[0],
     shortenedUrls: shortenedUrls.rows,
   };
+
+  console.log(userData);
+
+  return userData;
 }
 
 export const userRepository = { create, searchByEmail, searchById, getMe };

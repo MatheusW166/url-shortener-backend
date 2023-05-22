@@ -47,7 +47,6 @@ async function getMe(req, res) {
     }
     res.send(userMeResult);
   } catch (err) {
-    console.log(err);
     res.sendStatus(500);
   }
 }

@@ -46,8 +46,6 @@ async function getMe({ id }) {
     shortenedUrls: shortenedUrls.rows,
   };
 
-  console.log(userData);
-
   return userData;
 }
 
